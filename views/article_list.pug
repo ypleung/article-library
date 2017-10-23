@@ -17,11 +17,19 @@ block content
       div(class="panel panel-default")
         div(class="panel-heading")
           h4(class="panel-title")
-            a(data-toggle="collapse" href="#"+index) #{article._source.title} 
-          p Year: #{article._source.year}  
-          p Abstract: #{trimTo20words(article._source.abstract)} 
+            a(data-toggle="collapse" href="#"+index) #{article._source.title}
+          p Year: #{article._source.year}
+          p Abstract: #{trimTo20words(article._source.abstract)}
+          p
+          each author,index in article._source.authors
+            i
+            b #{author.firstname}  #{author.lastname}
+            if (index < article._source.authors.length - 1)
+              | , &nbsp;
         div(id=index class="panel-collapse collapse")
           div(class="panel-body") #{article._source.body}
+
+
+
     else
       li There are no articles.
-

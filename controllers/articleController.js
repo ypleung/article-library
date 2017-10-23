@@ -6,19 +6,18 @@
 
   // Display list of all Articles with optional search term
   exports.article_list = function(req, res, next) {
-    var qterm = req.query.term
-    var term = req.params.term || qterm
+    var qterm = req.query.term;
+    var term = req.params.term || qterm;
 
     if ((typeof(term) !== 'undefined') && (term.length > 0)) {
-      search_simple('library', term + "")
-        .then(function(results, err) {
+      search_simple('library', term + "").then(function(results, err) {
           if (err) { return next(err); }
-          res.render('article_list', { title: 'Article List', article_list:  results.hits.hits });
+          res.render('article_list', { title: 'Article List', article_list: results.hits.hits });
         });
     } else {
       list_all()
-        .then(results => {
-          res.render('article_list', { title: 'Article List', article_list:  results.hits.hits });
+        .then(function(results, err) {
+          res.render('article_list', { title: 'Article List', article_list: results.hits.hits });
         });
     }
   };
@@ -30,8 +29,8 @@
       query: {
         match_all: {}
       }
-   }
-   return search('library', body)
+   };
+   return search('library', body);
  };
 
  const search_simple = function search_simple(index, term) {
